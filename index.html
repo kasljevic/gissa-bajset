@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gissa Bajset</title>
+    <style>
+        /* Embedded CSS styles */
+        body {
+            background-color: #121212;
+            color: #FFFFFF;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        header, footer {
+            padding: 20px;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #poop-image {
+            max-width: 80%;
+            height: auto;
+            margin: 20px 0;
+            border: 2px solid #FFFFFF;
+        }
+
+        #choices button {
+            background-color: #1E1E1E;
+            color: #FFFFFF;
+            border: none;
+            padding: 15px 30px;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+            border-radius: 5px;
+        }
+
+        #choices button:hover {
+            background-color: #333333;
+        }
+
+        .flash-correct {
+            animation: flashGreen 0.5s;
+        }
+
+        .flash-incorrect {
+            animation: flashRed 0.5s;
+        }
+
+        @keyframes flashGreen {
+            0% { background-color: #121212; }
+            50% { background-color: #00FF00; }
+            100% { background-color: #121212; }
+        }
+
+        @keyframes flashRed {
+            0% { background-color: #121212; }
+            50% { background-color: #FF0000; }
+            100% { background-color: #121212; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Gissa Bajset</h1>
+        <p>Kan du gissa vilket djur bajset tillhör?</p>
+    </header>
+    <main>
+        <img id="poop-image" src="" alt="Bild på bajs">
+        <div id="choices">
+            <button id="choice1"></button>
+            <button id="choice2"></button>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2023 Gissa Bajset</p>
+    </footer>
+    <script>
+        // Embedded JavaScript code
+        const gameData = [
+            {
+                image: 'images/elephant_poop.jpg',
+                correct: 'Elefant',
+                incorrect: 'Flodhäst'
+            },
+            {
+                image: 'images/rabbit_poop.jpg',
+                correct: 'Kanin',
+                incorrect: 'Råtta'
+            },
+            {
+                image: 'images/horse_poop.jpg',
+                correct: 'Häst',
+                incorrect: 'Ko'
+            },
+            {
+                image: 'images/cow_poop.jpg',
+                correct: 'Ko',
+                incorrect: 'Får'
+            },
+            {
+                image: 'images/dog_poop.jpg',
+                correct: 'Hund',
+                incorrect: 'Katt'
+            },
+            {
+                image: 'images/cat_poop.jpg',
+                correct: 'Katt',
+                incorrect: 'Räv'
+            },
+            {
+                image: 'images/sheep_poop.jpg',
+                correct: 'Får',
+                incorrect: 'Get'
+            },
+            {
+                image: 'images/goat_poop.jpg',
+                correct: 'Get',
+                incorrect: 'Hjort'
+            },
+            {
+                image: 'images/deer_poop.jpg',
+                correct: 'Hjort',
+                incorrect: 'Älg'
+            },
+            {
+                image: 'images/bear_poop.jpg',
+                correct: 'Björn',
+                incorrect: 'Varg'
+            },
+            {
+                image: 'images/bird_poop.jpg',
+                correct: 'Fågel',
+                incorrect: 'Fladdermus'
+            },
+            {
+                image: 'images/fox_poop.jpg',
+                correct: 'Räv',
+                incorrect: 'Grävling'
+            }
+            // You can add more entries here if you like
+        ];
+
+        let currentQuestion = {};
+
+        function randomizeQuestion() {
+            currentQuestion = gameData[Math.floor(Math.random() * gameData.length)];
+            document.getElementById('poop-image').src = currentQuestion.image;
+
+            const choices = [currentQuestion.correct, currentQuestion.incorrect];
+            choices.sort(() => Math.random() - 0.5);
+
+            document.getElementById('choice1').textContent = choices[0];
+            document.getElementById('choice2').textContent = choices[1];
+        }
+
+        function checkAnswer(selectedChoice) {
+            const body = document.body;
+            if (selectedChoice === currentQuestion.correct) {
+                body.classList.add('flash-correct');
+            } else {
+                body.classList.add('flash-incorrect');
+            }
+
+            setTimeout(() => {
+                body.classList.remove('flash-correct', 'flash-incorrect');
+                randomizeQuestion();
+            }, 500);
+        }
+
+        document.getElementById('choice1').addEventListener('click', () => {
+            checkAnswer(document.getElementById('choice1').textContent);
+        });
+
+        document.getElementById('choice2').addEventListener('click', () => {
+            checkAnswer(document.getElementById('choice2').textContent);
+        });
+
+        // Initialize the game
+        randomizeQuestion();
+    </script>
+</body>
+</html>
